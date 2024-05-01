@@ -4,11 +4,17 @@ import time
 import pandas as pd
 import serial
 from collections import defaultdict
+from twilio.rest import Client
 
 dfname = 'tags.csv'
 serialPath = '/dev/cu.usbmodem142101'
 baudRate = 115200
 textSent = False # protection condition var that prevents lots of texts from being sent
+
+twilio_number = ''
+my_number = ''
+account_sid = ''
+auth_token = ''
 
 def check_timeouts():
 		current_time = datetime.datetime.now()
@@ -20,6 +26,19 @@ def check_timeouts():
 					print(f"Timeout: Decremented count for {item_name}, New Count: {item_occurrences[item_name]}")
 					if item_occurrences[item_name] == 0:
 						del item_occurrences[item_name]
+						sendText("no more itemA :(")
+
+def sendText(msg):
+	if not textSent:
+		client = Client(account_sid, auth_token)
+		message = client.messages.create(
+    	to=twilio_number,  # The recipient's phone number (include the country code)
+    	from_=my_number,  # Your Twilio phone number (include the country code)
+    	body=msg  # The content of the message
+)
+	else:
+		print("MSG already sent")
+
 
 if __name__ == '__main__':
 	
@@ -64,6 +83,11 @@ try:
                         print(f"Detected new EPC for {item_name}, Count: {item_occurrences[item_name]}")
                     seen_epcs[item_name][epc] = datetime.datetime.now()  # Update last seen time
                 else:
+                    print("EPC not found in the DataFrame.")
+except KeyboardInterrupt:
+    print("Program terminated by user.")
+finally:
+    ser.close()  # Ensure the serial connection is closed on exit
                     print("EPC not found in the DataFrame.")
 except KeyboardInterrupt:
     print("Program terminated by user.")
