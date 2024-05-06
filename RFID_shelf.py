@@ -87,8 +87,8 @@ try:
 except KeyboardInterrupt:
     print("Program terminated by user.")
 finally:
-    ser.close()  # Ensure the serial connection is closed on exit
-                    print("EPC not found in the DataFrame.")
+	ser.close()  # Ensure the serial connection is closed on exit
+	print("EPC not found in the DataFrame.")
 except KeyboardInterrupt:
     print("Program terminated by user.")
 finally:
