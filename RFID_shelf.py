@@ -12,8 +12,8 @@ baudRate = 115200
 textSent = False # protection condition var that prevents lots of texts from being sent
 
 twilio_number = ''
-my_number = ''
-account_sid = ''
+my_number = '' 
+account_sid = '' 
 auth_token = ''
 
 def check_timeouts():
@@ -84,12 +84,9 @@ try:
                     seen_epcs[item_name][epc] = datetime.datetime.now()  # Update last seen time
                 else:
                     print("EPC not found in the DataFrame.")
+
 except KeyboardInterrupt:
     print("Program terminated by user.")
-finally:
-	ser.close()  # Ensure the serial connection is closed on exit
-	print("EPC not found in the DataFrame.")
-except KeyboardInterrupt:
-    print("Program terminated by user.")
+
 finally:
     ser.close()  # Ensure the serial connection is closed on exit
