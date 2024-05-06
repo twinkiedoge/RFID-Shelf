@@ -32,8 +32,8 @@ def sendText(msg):
 	if not textSent:
 		client = Client(account_sid, auth_token)
 		message = client.messages.create(
-    	to=twilio_number,  # The recipient's phone number (include the country code)
-    	from_=my_number,  # Your Twilio phone number (include the country code)
+    	to=my_number,  # The recipient's phone number (include the country code)
+    	from_=twilio_number,  # Your Twilio phone number (include the country code)
     	body=msg  # The content of the message
 )
 	else:
